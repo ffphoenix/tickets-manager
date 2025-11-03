@@ -162,4 +162,23 @@ final class EventsController
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
         }
     }
+
+    #[Route(path: '/events/{id}', name: 'events_delete', methods: ['DELETE'])]
+    #[OA\Delete(path: '/events/{id}', summary: 'Delete event by ID')]
+    #[OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))]
+    #[OA\Response(response: 204, description: 'Event deleted')]
+    #[OA\Response(response: 400, description: 'Bad Request')]
+    #[OA\Response(response: 404, description: 'Not Found')]
+    public function delete(string $id): Response
+    {
+        try {
+            $eventId = EventId::fromString($id);
+            $this->events->delete($eventId);
+            return new Response(null, Response::HTTP_NO_CONTENT);
+        } catch (\InvalidArgumentException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        } catch (NotFound $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
+        }
+    }
 }

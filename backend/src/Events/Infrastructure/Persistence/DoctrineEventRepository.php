@@ -63,6 +63,17 @@ final class DoctrineEventRepository implements EventRepository
         return (bool) $this->em->getRepository(OrmEvent::class)->find((string) $id);
     }
 
+    public function delete(EventId $id): void
+    {
+        /** @var OrmEvent|null $entity */
+        $entity = $this->em->find(OrmEvent::class, (string) $id);
+        if (!$entity) {
+            throw new NotFound('Event not found: ' . (string) $id);
+        }
+        $this->em->remove($entity);
+        $this->em->flush();
+    }
+
     /**
      * @return DomainEvent[]
      */

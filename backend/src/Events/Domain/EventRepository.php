@@ -16,6 +16,13 @@ interface EventRepository
     public function exists(EventId $id): bool;
 
     /**
+     * Deletes the event by id.
+     *
+     * @throws NotFound
+     */
+    public function delete(EventId $id): void;
+
+    /**
      * Returns all events ordered by startAt ascending.
      *
      * @return Event[]
