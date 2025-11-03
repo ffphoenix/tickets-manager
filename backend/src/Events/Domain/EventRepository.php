@@ -14,4 +14,11 @@ interface EventRepository
     public function get(EventId $id): Event;
 
     public function exists(EventId $id): bool;
+
+    /**
+     * Returns all events ordered by startAt ascending.
+     *
+     * @return Event[]
+     */
+    public function all(): array;
 }

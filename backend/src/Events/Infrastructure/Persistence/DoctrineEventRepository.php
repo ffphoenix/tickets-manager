@@ -62,4 +62,29 @@ final class DoctrineEventRepository implements EventRepository
     {
         return (bool) $this->em->getRepository(OrmEvent::class)->find((string) $id);
     }
+
+    /**
+     * @return DomainEvent[]
+     */
+    public function all(): array
+    {
+        $qb = $this->em->createQueryBuilder()
+            ->select('e')
+            ->from(OrmEvent::class, 'e')
+            ->orderBy('e.startAt', 'ASC');
+
+        /** @var OrmEvent[] $rows */
+        $rows = $qb->getQuery()->getResult();
+
+        return array_map(function (OrmEvent $entity): DomainEvent {
+            return new DomainEvent(
+                EventId::fromString($entity->getId()),
+                $entity->getName(),
+                OrganiserId::fromString($entity->getOrganiserId()),
+                $entity->getStartAt(),
+                $entity->getEndAt(),
+                $entity->getCreatedAt(),
+            );
+        }, $rows);
+    }
 }

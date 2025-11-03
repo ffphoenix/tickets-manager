@@ -22,6 +22,34 @@ final class EventsController
         private readonly EventRepository $events,
     ) {}
 
+    #[Route(path: '/events', name: 'events_list', methods: ['GET'])]
+    #[OA\Get(path: '/events', summary: 'List all events')]
+    #[OA\Response(response: 200, description: 'List of events', content: new OA\JsonContent(type: 'array', items: new OA\Items(properties: [
+        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'name', type: 'string'),
+        new OA\Property(property: 'organiserId', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'startAt', type: 'string', format: 'date-time'),
+        new OA\Property(property: 'endAt', type: 'string', format: 'date-time'),
+        new OA\Property(property: 'createdAt', type: 'string', format: 'date-time')
+    ], type: 'object')))]
+    public function list(): Response
+    {
+        $events = $this->events->all();
+
+        $data = array_map(static function ($event) {
+            return [
+                'id' => (string) $event->id(),
+                'name' => $event->name(),
+                'organiserId' => (string) $event->organiserId(),
+                'startAt' => $event->startAt()->format(DATE_ATOM),
+                'endAt' => $event->endAt()->format(DATE_ATOM),
+                'createdAt' => $event->createdAt()->format(DATE_ATOM),
+            ];
+        }, $events);
+
+        return new JsonResponse($data);
+    }
+
     #[Route(path: '/events', name: 'events_create', methods: ['POST'])]
     #[OA\Post(path: '/events', summary: 'Create a new event')]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(required: ['organiserId','name','startAt','endAt'], properties: [
