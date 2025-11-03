@@ -17,6 +17,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
+    // Events
     {
       path: '/events',
       name: 'events-list',
@@ -31,6 +32,35 @@ const router = createRouter({
       path: '/events/:id',
       name: 'event-detail',
       component: () => import('../views/Events/EventDetailView.vue'),
+      props: true,
+    },
+    {
+      path: '/events/:id/edit',
+      name: 'event-edit',
+      component: () => import('../views/Events/EventEditView.vue'),
+      props: true,
+    },
+    // Organisers
+    {
+      path: '/organisers',
+      name: 'organisers-list',
+      component: () => import('../views/Organisers/OrganisersListView.vue'),
+    },
+    {
+      path: '/organisers/new',
+      name: 'organiser-create',
+      component: () => import('../views/Organisers/OrganiserCreateView.vue'),
+    },
+    {
+      path: '/organisers/:id',
+      name: 'organiser-detail',
+      component: () => import('../views/Organisers/OrganiserDetailView.vue'),
+      props: true,
+    },
+    {
+      path: '/organisers/:id/edit',
+      name: 'organiser-edit',
+      component: () => import('../views/Organisers/OrganiserEditView.vue'),
       props: true,
     },
   ],

@@ -38,7 +38,6 @@ A minimal tickets management backend built with Symfony 7 and Doctrine ORM. It e
 │   ├── .env                     # Default env variables
 │   └── frankenphp/              # FrankenPHP helper scripts (Docker entrypoint)
 ├── frontend/                    # Vue 3 app (Vite + Pinia + Vue Router)
-├── pgdata/                      # Postgres data dir (if used locally)
 └── LICENSE                      # MIT
 ```
 

@@ -29,7 +29,10 @@ watch(() => route.params.id, () => {
 
 <template>
   <main>
-    <button @click="() => router.push('/events')">← Back to Events</button>
+    <div style="display:flex; gap:.5rem; align-items:center; margin-bottom: .5rem">
+      <button @click="() => router.push('/events')">← Back to Events</button>
+      <button v-if="id" @click="() => router.push(`/events/${id}/edit`)">Edit</button>
+    </div>
     <h1>Event Details</h1>
 
     <div v-if="loading">Loading…</div>
@@ -42,6 +45,9 @@ watch(() => route.params.id, () => {
       <p><strong>Start At:</strong> {{ toLocal(event.startAt) }}</p>
       <p><strong>End At:</strong> {{ toLocal(event.endAt) }}</p>
       <p><strong>Created At:</strong> {{ toLocal(event.createdAt) }}</p>
+      <p>
+        <button @click="() => router.push(`/events/${event.id}/edit`)">Edit</button>
+      </p>
     </div>
   </main>
 </template>

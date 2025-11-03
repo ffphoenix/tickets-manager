@@ -16,6 +16,13 @@ interface OrganiserRepository
     public function exists(OrganiserId $id): bool;
 
     /**
+     * Delete organiser by id
+     *
+     * @throws NotFound
+     */
+    public function delete(OrganiserId $id): void;
+
+    /**
      * @return Organiser[]
      */
     public function all(): array;

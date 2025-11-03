@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { EventsApi, type CreateEventPayload, type EventDto } from '@/services/eventsApi.ts'
+import { EventsApi, type CreateEventPayload, type UpdateEventPayload, type EventDto } from '@/services/eventsApi.ts'
 
 export const useEventsStore = defineStore('events', {
   state: () => ({
@@ -8,6 +8,7 @@ export const useEventsStore = defineStore('events', {
     loadingList: false as boolean,
     loadingById: {} as Record<string, boolean>,
     creating: false as boolean,
+    updatingById: {} as Record<string, boolean>,
     deletingById: {} as Record<string, boolean>,
     error: null as string | null,
   }),
@@ -23,6 +24,7 @@ export const useEventsStore = defineStore('events', {
       if (id) return !!state.loadingById[id]
       return state.loadingList
     },
+    isUpdating: (state) => (id: string) => !!state.updatingById[id],
     isDeleting: (state) => (id: string) => !!state.deletingById[id],
   },
 
@@ -76,6 +78,22 @@ export const useEventsStore = defineStore('events', {
         return null
       } finally {
         this.creating = false
+      }
+    },
+
+    async update(id: string, payload: UpdateEventPayload): Promise<EventDto | null> {
+      this.updatingById[id] = true
+      this.error = null
+      try {
+        const updated = await EventsApi.update(id, payload)
+        this.items[updated.id] = updated
+        if (!this.ids.includes(updated.id)) this.ids.push(updated.id)
+        return updated
+      } catch (e: any) {
+        this.error = e?.message || 'Failed to update event'
+        return null
+      } finally {
+        this.updatingById[id] = false
       }
     },
 

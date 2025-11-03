@@ -59,6 +59,7 @@ onMounted(load)
           <td>{{ toLocal(e.createdAt) }}</td>
           <td>
             <button @click="() => router.push(`/events/${e.id}`)">View</button>
+            <button @click="() => router.push(`/events/${e.id}/edit`)">Edit</button>
             <button @click="() => onDelete(e.id)">Delete</button>
           </td>
         </tr>

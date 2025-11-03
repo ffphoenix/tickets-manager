@@ -55,6 +55,22 @@ final class DoctrineOrganiserRepository implements OrganiserRepository
     }
 
     /**
+     * Delete organiser by id
+     *
+     * @throws NotFound
+     */
+    public function delete(OrganiserId $id): void
+    {
+        /** @var OrmOrganiser|null $entity */
+        $entity = $this->em->find(OrmOrganiser::class, (string) $id);
+        if (!$entity) {
+            throw new NotFound('Organiser not found: ' . (string) $id);
+        }
+        $this->em->remove($entity);
+        $this->em->flush();
+    }
+
+    /**
      * @return DomainOrganiser[]
      */
     public function all(): array

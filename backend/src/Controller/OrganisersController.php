@@ -4,6 +4,10 @@ namespace App\Controller;
 
 use App\Organisers\Application\CreateOrganiser\CreateOrganiser;
 use App\Organisers\Application\CreateOrganiser\CreateOrganiserHandler;
+use App\Organisers\Application\UpdateOrganiser\UpdateOrganiser;
+use App\Organisers\Application\UpdateOrganiser\UpdateOrganiserHandler;
+use App\Organisers\Application\DeleteOrganiser\DeleteOrganiser;
+use App\Organisers\Application\DeleteOrganiser\DeleteOrganiserHandler;
 use App\Organisers\Domain\OrganiserId;
 use App\Organisers\Domain\OrganiserRepository;
 use App\Shared\Domain\Exception\NotFound;
@@ -18,6 +22,8 @@ final class OrganisersController
 {
     public function __construct(
         private readonly CreateOrganiserHandler $createOrganiser,
+        private readonly UpdateOrganiserHandler $updateOrganiser,
+        private readonly DeleteOrganiserHandler $deleteOrganiser,
         private readonly OrganiserRepository $organisers,
     ) {}
 
@@ -110,6 +116,61 @@ final class OrganisersController
                 'name' => $organiser->name(),
                 'createdAt' => $organiser->createdAt()->format(DATE_ATOM),
             ]);
+        } catch (\InvalidArgumentException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        } catch (NotFound $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    #[Route(path: '/organisers/{id}', name: 'organisers_update', methods: ['PUT'])]
+    #[OA\Put(path: '/organisers/{id}', summary: 'Update organiser name')]
+    #[OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(required: ['name'], properties: [
+        new OA\Property(property: 'name', type: 'string')
+    ], type: 'object'))]
+    #[OA\Response(response: 200, description: 'Organiser updated', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'name', type: 'string'),
+        new OA\Property(property: 'createdAt', type: 'string', format: 'date-time')
+    ], type: 'object'))]
+    #[OA\Response(response: 400, description: 'Bad Request')]
+    #[OA\Response(response: 404, description: 'Not Found')]
+    public function update(string $id, Request $request): Response
+    {
+        $data = json_decode($request->getContent() ?: '{}', true);
+        if (!is_array($data)) {
+            return new JsonResponse(['error' => 'Invalid JSON body'], Response::HTTP_BAD_REQUEST);
+        }
+        try {
+            if (!isset($data['name']) || !is_string($data['name']) || trim($data['name']) === '') {
+                return new JsonResponse(['error' => 'name is required'], Response::HTTP_BAD_REQUEST);
+            }
+            ($this->updateOrganiser)(new UpdateOrganiser($id, $data['name']));
+            $organiser = $this->organisers->get(OrganiserId::fromString($id));
+            return new JsonResponse([
+                'id' => (string) $organiser->id(),
+                'name' => $organiser->name(),
+                'createdAt' => $organiser->createdAt()->format(DATE_ATOM),
+            ]);
+        } catch (\InvalidArgumentException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        } catch (NotFound $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    #[Route(path: '/organisers/{id}', name: 'organisers_delete', methods: ['DELETE'])]
+    #[OA\Delete(path: '/organisers/{id}', summary: 'Delete organiser by ID')]
+    #[OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))]
+    #[OA\Response(response: 204, description: 'Organiser deleted')]
+    #[OA\Response(response: 400, description: 'Bad Request')]
+    #[OA\Response(response: 404, description: 'Not Found')]
+    public function delete(string $id): Response
+    {
+        try {
+            ($this->deleteOrganiser)(new DeleteOrganiser($id));
+            return new Response(null, Response::HTTP_NO_CONTENT);
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         } catch (NotFound $e) {

@@ -19,6 +19,12 @@ export type CreateEventPayload = {
   eventId?: string
 };
 
+export type UpdateEventPayload = {
+  name: string
+  startAt: string // ISO
+  endAt: string // ISO
+};
+
 async function handle<T>(res: Response): Promise<T> {
   if (!res.ok) {
     let message = `${res.status} ${res.statusText}`;
@@ -45,6 +51,15 @@ export const EventsApi = {
   async create(payload: CreateEventPayload): Promise<EventDto> {
     const res = await fetch(`${BASE_URL}/events`, {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    return handle<EventDto>(res);
+  },
+
+  async update(id: string, payload: UpdateEventPayload): Promise<EventDto> {
+    const res = await fetch(`${BASE_URL}/events/${encodeURIComponent(id)}`, {
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
