@@ -1,0 +1,10 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Tickets Manager API
+            description: OpenAPI documentation for the Tickets Manager backend.
+            version: 1.0.0
+    areas: # to filter documented areas
+        path_patterns:
+            # Document all application routes except the Swagger UI/JSON endpoints themselves
+            - ^/(?!api\/doc$)

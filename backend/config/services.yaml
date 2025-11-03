@@ -19,11 +19,11 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-        # Bind Tickets repository interface to Doctrine ORM implementation
-        App\Tickets\Domain\TicketRepository: '@App\Tickets\Infrastructure\Persistence\DoctrineTicketRepository'
+    # Bind Tickets repository interface to Doctrine ORM implementation
+    App\Tickets\Domain\TicketRepository: '@App\Tickets\Infrastructure\Persistence\DoctrineTicketRepository'
 
-        # Bind Events repository interface to Doctrine ORM implementation
-        App\Events\Domain\EventRepository: '@App\Events\Infrastructure\Persistence\DoctrineEventRepository'
+    # Bind Events repository interface to Doctrine ORM implementation
+    App\Events\Domain\EventRepository: '@App\Events\Infrastructure\Persistence\DoctrineEventRepository'
 
-        # Bind Organisers repository interface to Doctrine ORM implementation
-        App\Organisers\Domain\OrganiserRepository: '@App\Organisers\Infrastructure\Persistence\DoctrineOrganiserRepository'
+    # Bind Organisers repository interface to Doctrine ORM implementation
+    App\Organisers\Domain\OrganiserRepository: '@App\Organisers\Infrastructure\Persistence\DoctrineOrganiserRepository'

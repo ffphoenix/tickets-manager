@@ -7,11 +7,13 @@ use App\Tickets\Application\CreateTicket\CreateTicket;
 use App\Tickets\Application\CreateTicket\CreateTicketHandler;
 use App\Tickets\Domain\TicketId;
 use App\Tickets\Domain\TicketRepository;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[OA\Tag(name: 'Tickets')]
 final class TicketsController
 {
     public function __construct(
@@ -20,6 +22,24 @@ final class TicketsController
     ) {}
 
     #[Route(path: '/tickets', name: 'tickets_create', methods: ['POST'])]
+    #[OA\Post(path: '/tickets', summary: 'Create a new ticket')]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(required: ['eventId','organiserId','priceCents'], properties: [
+        new OA\Property(property: 'ticketId', description: 'Optional client-provided UUID', type: 'string', format: 'uuid', nullable: true),
+        new OA\Property(property: 'eventId', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'organiserId', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'priceCents', type: 'integer')
+    ], type: 'object'))]
+    #[OA\Response(response: 201, description: 'Ticket created', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'eventId', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'organiserId', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'priceCents', type: 'integer'),
+        new OA\Property(property: 'status', type: 'string'),
+        new OA\Property(property: 'createdAt', type: 'string', format: 'date-time')
+    ], type: 'object'))]
+    #[OA\Response(response: 400, description: 'Bad Request')]
+    #[OA\Response(response: 404, description: 'Not Found')]
+    #[OA\Response(response: 422, description: 'Unprocessable Entity')]
     public function create(Request $request): Response
     {
         $data = json_decode($request->getContent() ?: '{}', true);
@@ -69,6 +89,18 @@ final class TicketsController
     }
 
     #[Route(path: '/tickets/{id}', name: 'tickets_get', methods: ['GET'])]
+    #[OA\Get(path: '/tickets/{id}', summary: 'Get ticket by ID')]
+    #[OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'string', format: 'uuid'))]
+    #[OA\Response(response: 200, description: 'Ticket found', content: new OA\JsonContent(properties: [
+        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'eventId', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'organiserId', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'priceCents', type: 'integer'),
+        new OA\Property(property: 'status', type: 'string'),
+        new OA\Property(property: 'createdAt', type: 'string', format: 'date-time')
+    ], type: 'object'))]
+    #[OA\Response(response: 400, description: 'Bad Request')]
+    #[OA\Response(response: 404, description: 'Not Found')]
     public function getOne(string $id): Response
     {
         try {
