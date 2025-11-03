@@ -53,4 +53,23 @@ final class DoctrineOrganiserRepository implements OrganiserRepository
     {
         return (bool) $this->em->getRepository(OrmOrganiser::class)->find((string) $id);
     }
+
+    /**
+     * @return DomainOrganiser[]
+     */
+    public function all(): array
+    {
+        $repo = $this->em->getRepository(OrmOrganiser::class);
+        /** @var OrmOrganiser[] $entities */
+        $entities = $repo->findBy([], ['createdAt' => 'DESC']);
+        $out = [];
+        foreach ($entities as $entity) {
+            $out[] = new DomainOrganiser(
+                OrganiserId::fromString($entity->getId()),
+                $entity->getName(),
+                $entity->getCreatedAt(),
+            );
+        }
+        return $out;
+    }
 }

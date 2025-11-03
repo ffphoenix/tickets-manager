@@ -21,6 +21,27 @@ final class OrganisersController
         private readonly OrganiserRepository $organisers,
     ) {}
 
+    #[Route(path: '/organisers', name: 'organisers_list', methods: ['GET'])]
+    #[OA\Get(path: '/organisers', summary: 'List all organisers')]
+    #[OA\Response(response: 200, description: 'List of organisers', content: new OA\JsonContent(type: 'array', items: new OA\Items(properties: [
+        new OA\Property(property: 'id', type: 'string', format: 'uuid'),
+        new OA\Property(property: 'name', type: 'string'),
+        new OA\Property(property: 'createdAt', type: 'string', format: 'date-time'),
+    ], type: 'object')))]
+    public function list(): Response
+    {
+        $all = $this->organisers->all();
+        $data = array_map(static function ($o) {
+            return [
+                'id' => (string) $o->id(),
+                'name' => $o->name(),
+                'createdAt' => $o->createdAt()->format(DATE_ATOM),
+            ];
+        }, $all);
+
+        return new JsonResponse($data);
+    }
+
     #[Route(path: '/organisers', name: 'organisers_create', methods: ['POST'])]
     #[OA\Post(path: '/organisers', summary: 'Create a new organiser')]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(required: ['name'], properties: [

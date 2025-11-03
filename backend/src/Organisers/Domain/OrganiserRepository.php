@@ -14,4 +14,9 @@ interface OrganiserRepository
     public function get(OrganiserId $id): Organiser;
 
     public function exists(OrganiserId $id): bool;
+
+    /**
+     * @return Organiser[]
+     */
+    public function all(): array;
 }
