@@ -10,8 +10,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            lazy: true
+            stateless: true
             provider: users_in_memory
+            custom_authenticators:
+                - App\Shared\Infrastructure\Security\JwtAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

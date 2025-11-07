@@ -10,8 +10,14 @@ organisers_controllers:
         namespace: App\Organisers\Presentation\Http
     type: attribute
 
-controllers:
+tickets_controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Tickets/Presentation/Http
+        namespace: App\Tickets\Presentation\Http
+    type: attribute
+
+auth_controllers:
+    resource:
+        path: ../src/Auth/Presentation/Http
+        namespace: App\Auth\Presentation\Http
     type: attribute

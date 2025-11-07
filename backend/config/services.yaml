@@ -27,3 +27,10 @@ services:
 
     # Bind Organisers repository interface to Doctrine ORM implementation
     App\Organisers\Domain\OrganiserRepository: '@App\Organisers\Infrastructure\Persistence\DoctrineOrganiserRepository'
+
+    # Bind Users repository interface to Doctrine ORM implementation
+    App\Users\Domain\UserRepository: '@App\Users\Infrastructure\Persistence\DoctrineUserRepository'
+
+    # Configure JwtService from env
+    App\Shared\Infrastructure\Security\JwtService:
+        factory: ['App\Shared\Infrastructure\Security\JwtService', 'fromEnv']

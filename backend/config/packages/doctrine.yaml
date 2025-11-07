@@ -12,6 +12,8 @@ doctrine:
             event_id: App\Shared\Infrastructure\Doctrine\Type\EventIdType
             organiser_id: App\Shared\Infrastructure\Doctrine\Type\OrganiserIdType
             ticket_id: App\Shared\Infrastructure\Doctrine\Type\TicketIdType
+            user_id: App\Shared\Infrastructure\Doctrine\Type\UserIdType
+            email: App\Shared\Infrastructure\Doctrine\Type\EmailType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
@@ -40,6 +42,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Tickets/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: 'App\Tickets\Domain\Entity'
                 alias: App\Tickets\Domain\Entity
+            App\Users\Domain\Entity:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Users/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Users\Domain\Entity'
+                alias: App\Users\Domain\Entity
         controller_resolver:
             auto_mapping: false
 
