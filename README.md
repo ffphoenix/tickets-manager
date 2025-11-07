@@ -1,6 +1,8 @@
 # Tickets Manager
 
-A minimal tickets management backend built with Symfony 7 and Doctrine ORM. It exposes a small REST API to manage organisers, events, and tickets, and ships with OpenAPI/Swagger documentation via NelmioApiDocBundle.
+A minimal tickets management backend to test DDD architecture in action. 
+
+Built with Symfony 7 and Doctrine ORM. It exposes a small REST API to manage organisers, events, and tickets, and ships with OpenAPI/Swagger documentation via NelmioApiDocBundle.
 
 ## Stack
 - Backend:
