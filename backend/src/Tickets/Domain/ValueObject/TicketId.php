@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tickets\Domain;
+namespace App\Tickets\Domain\ValueObject;
 
 use App\Shared\Domain\ValueObject\Uuid;
 

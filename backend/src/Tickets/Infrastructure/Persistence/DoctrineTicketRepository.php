@@ -6,10 +6,10 @@ use App\Entity\Ticket as OrmTicket;
 use App\Events\Domain\ValueObject\EventId;
 use App\Organisers\Domain\ValueObject\OrganiserId;
 use App\Shared\Domain\Exception\NotFound;
-use App\Tickets\Domain\Ticket as DomainTicket;
-use App\Tickets\Domain\TicketId;
+use App\Tickets\Domain\Entity\Ticket as DomainTicket;
 use App\Tickets\Domain\TicketRepository;
-use App\Tickets\Domain\TicketStatus;
+use App\Tickets\Domain\ValueObject\TicketId;
+use App\Tickets\Domain\ValueObject\TicketStatus;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class DoctrineTicketRepository implements TicketRepository

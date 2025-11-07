@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Tickets\Domain;
+namespace App\Tickets\Domain\Entity;
 
 use App\Events\Domain\ValueObject\EventId;
 use App\Organisers\Domain\ValueObject\OrganiserId;
+use App\Tickets\Domain\ValueObject\TicketId;
+use App\Tickets\Domain\ValueObject\TicketStatus;
 
 final class Ticket
 {
     public function __construct(
-        private readonly TicketId $id,
-        private readonly EventId $eventId,
-        private readonly OrganiserId $organiserId,
+        private TicketId $id,
+        private EventId $eventId,
+        private OrganiserId $organiserId,
         private int $priceCents,
         private TicketStatus $status,
-        private readonly \DateTimeImmutable $createdAt,
+        private \DateTimeImmutable $createdAt,
     ) {}
 
     public static function create(TicketId $id, EventId $eventId, OrganiserId $organiserId, int $priceCents): self

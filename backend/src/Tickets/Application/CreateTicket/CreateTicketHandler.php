@@ -4,9 +4,9 @@ namespace App\Tickets\Application\CreateTicket;
 
 use App\Events\Domain\ValueObject\EventId;
 use App\Organisers\Domain\ValueObject\OrganiserId;
-use App\Tickets\Domain\Ticket;
-use App\Tickets\Domain\TicketId;
+use App\Tickets\Domain\Entity\Ticket;
 use App\Tickets\Domain\TicketRepository;
+use App\Tickets\Domain\ValueObject\TicketId;
 
 final class CreateTicketHandler
 {

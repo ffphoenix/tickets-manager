@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Controller;
+namespace App\Tickets\Presentation\Http;
 
 use App\Shared\Domain\Exception\NotFound;
 use App\Tickets\Application\CreateTicket\CreateTicket;
 use App\Tickets\Application\CreateTicket\CreateTicketHandler;
-use App\Tickets\Domain\TicketId;
 use App\Tickets\Domain\TicketRepository;
+use App\Tickets\Domain\ValueObject\TicketId;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

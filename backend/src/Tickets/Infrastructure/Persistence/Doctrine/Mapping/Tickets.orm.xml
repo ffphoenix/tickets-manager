@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Tickets\Domain\Entity\Ticket" table="tickets">
+
+        <id name="id" type="ticket_id" column="id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <field name="eventId" type="event_id" column="event_id" />
+
+        <field name="organiserId" type="organiser_id" column="organiser_id" />
+
+        <field name="priceCents" type="integer" column="price_cents" />
+
+        <field name="status" type="string" length="32" column="status" />
+
+        <field name="createdAt" type="datetime_immutable" column="created_at" />
+
+    </entity>
+</doctrine-mapping>

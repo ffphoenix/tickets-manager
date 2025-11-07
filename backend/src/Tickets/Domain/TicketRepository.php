@@ -3,6 +3,8 @@
 namespace App\Tickets\Domain;
 
 use App\Shared\Domain\Exception\NotFound;
+use App\Tickets\Domain\Entity\Ticket;
+use App\Tickets\Domain\ValueObject\TicketId;
 
 interface TicketRepository
 {
