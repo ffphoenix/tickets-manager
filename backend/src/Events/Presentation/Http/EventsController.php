@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Events\Presentation\Http;
 
 use App\Events\Application\CreateEvent\CreateEvent;
 use App\Events\Application\CreateEvent\CreateEventHandler;

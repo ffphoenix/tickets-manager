@@ -7,12 +7,12 @@ use App\Organisers\Domain\OrganiserId;
 final class Event
 {
     public function __construct(
-        private readonly EventId $id,
+         private EventId $id,
         private string $name,
-        private readonly OrganiserId $organiserId,
+        private OrganiserId $organiserId,
         private \DateTimeImmutable $startAt,
         private \DateTimeImmutable $endAt,
-        private readonly \DateTimeImmutable $createdAt,
+        private \DateTimeImmutable $createdAt,
     ) {
         $this->assertDates($startAt, $endAt);
     }
