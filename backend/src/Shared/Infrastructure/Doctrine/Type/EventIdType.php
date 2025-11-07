@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Doctrine\Type;
 
-use App\Events\Domain\EventId;
+use App\Events\Domain\ValueObject\EventId;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 

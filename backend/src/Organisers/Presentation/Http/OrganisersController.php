@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Controller;
+namespace App\Organisers\Presentation\Http;
 
 use App\Organisers\Application\CreateOrganiser\CreateOrganiser;
 use App\Organisers\Application\CreateOrganiser\CreateOrganiserHandler;
-use App\Organisers\Application\UpdateOrganiser\UpdateOrganiser;
-use App\Organisers\Application\UpdateOrganiser\UpdateOrganiserHandler;
 use App\Organisers\Application\DeleteOrganiser\DeleteOrganiser;
 use App\Organisers\Application\DeleteOrganiser\DeleteOrganiserHandler;
-use App\Organisers\Domain\OrganiserId;
+use App\Organisers\Application\UpdateOrganiser\UpdateOrganiser;
+use App\Organisers\Application\UpdateOrganiser\UpdateOrganiserHandler;
 use App\Organisers\Domain\OrganiserRepository;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 use App\Shared\Domain\Exception\NotFound;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;

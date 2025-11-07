@@ -2,8 +2,8 @@
 
 namespace App\Tickets\Domain;
 
-use App\Events\Domain\EventId;
-use App\Organisers\Domain\OrganiserId;
+use App\Events\Domain\ValueObject\EventId;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 
 final class Ticket
 {

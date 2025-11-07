@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Events\Domain;
+namespace App\Events\Domain\Entity;
 
-use App\Organisers\Domain\OrganiserId;
+use App\Events\Domain\ValueObject\EventId;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 
 final class Event
 {
     public function __construct(
-         private EventId $id,
+        private EventId $id,
         private string $name,
         private OrganiserId $organiserId,
         private \DateTimeImmutable $startAt,

@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Doctrine\Type;
 
-use App\Organisers\Domain\OrganiserId;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 

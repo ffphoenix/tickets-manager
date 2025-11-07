@@ -2,8 +2,8 @@
 
 namespace App\Events\Application\UpdateEvent;
 
-use App\Events\Domain\EventId;
 use App\Events\Domain\EventRepository;
+use App\Events\Domain\ValueObject\EventId;
 
 final class UpdateEventHandler
 {

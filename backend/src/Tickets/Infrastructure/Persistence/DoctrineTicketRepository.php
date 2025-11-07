@@ -2,14 +2,14 @@
 
 namespace App\Tickets\Infrastructure\Persistence;
 
-use App\Events\Domain\EventId;
-use App\Organisers\Domain\OrganiserId;
+use App\Entity\Ticket as OrmTicket;
+use App\Events\Domain\ValueObject\EventId;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 use App\Shared\Domain\Exception\NotFound;
 use App\Tickets\Domain\Ticket as DomainTicket;
 use App\Tickets\Domain\TicketId;
 use App\Tickets\Domain\TicketRepository;
 use App\Tickets\Domain\TicketStatus;
-use App\Entity\Ticket as OrmTicket;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class DoctrineTicketRepository implements TicketRepository

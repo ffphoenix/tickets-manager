@@ -1,12 +1,17 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
-
 events_controllers:
     resource:
         path: ../src/Events/Presentation/Http
         namespace: App\Events\Presentation\Http
     type: attribute
 
+organisers_controllers:
+    resource:
+        path: ../src/Organisers/Presentation/Http
+        namespace: App\Organisers\Presentation\Http
+    type: attribute
+
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute

@@ -2,9 +2,9 @@
 
 namespace App\Events\Infrastructure\Persistence;
 
-use App\Events\Domain\Event as DomainEvent;
-use App\Events\Domain\EventId;
+use App\Events\Domain\Entity\Event as DomainEvent;
 use App\Events\Domain\EventRepository;
+use App\Events\Domain\ValueObject\EventId;
 use App\Shared\Domain\Exception\NotFound;
 use Doctrine\ORM\EntityManagerInterface;
 

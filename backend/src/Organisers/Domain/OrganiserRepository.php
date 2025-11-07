@@ -2,6 +2,8 @@
 
 namespace App\Organisers\Domain;
 
+use App\Organisers\Domain\Entity\Organiser;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 use App\Shared\Domain\Exception\NotFound;
 
 interface OrganiserRepository

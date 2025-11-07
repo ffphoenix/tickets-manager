@@ -2,10 +2,9 @@
 
 namespace App\Organisers\Infrastructure\Persistence;
 
-use App\Entity\Organiser as OrmOrganiser;
-use App\Organisers\Domain\Organiser as DomainOrganiser;
-use App\Organisers\Domain\OrganiserId;
+use App\Organisers\Domain\Entity\Organiser as DomainOrganiser;
 use App\Organisers\Domain\OrganiserRepository;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 use App\Shared\Domain\Exception\NotFound;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -17,41 +16,23 @@ final class DoctrineOrganiserRepository implements OrganiserRepository
 
     public function save(DomainOrganiser $organiser): void
     {
-        $repo = $this->em->getRepository(OrmOrganiser::class);
-        /** @var OrmOrganiser|null $entity */
-        $entity = $repo->find((string) $organiser->id());
-        if (!$entity) {
-            $entity = new OrmOrganiser(
-                (string) $organiser->id(),
-                $organiser->name(),
-                $organiser->createdAt(),
-            );
-        } else {
-            $entity->setName($organiser->name());
-        }
-
-        $this->em->persist($entity);
+        $this->em->persist($organiser);
         $this->em->flush();
     }
 
     public function get(OrganiserId $id): DomainOrganiser
     {
-        /** @var OrmOrganiser|null $entity */
-        $entity = $this->em->find(OrmOrganiser::class, (string) $id);
+        $entity = $this->em->find(DomainOrganiser::class, $id);
         if (!$entity) {
-            throw new NotFound('Organiser not found: ' . (string) $id);
+            throw new NotFound('Event not found: ' . (string) $id);
         }
 
-        return new DomainOrganiser(
-            OrganiserId::fromString($entity->getId()),
-            $entity->getName(),
-            $entity->getCreatedAt(),
-        );
+        return $entity;
     }
 
     public function exists(OrganiserId $id): bool
     {
-        return (bool) $this->em->getRepository(OrmOrganiser::class)->find((string) $id);
+        return (bool) $this->em->getRepository(DomainOrganiser::class)->find((string) $id);
     }
 
     /**
@@ -61,8 +42,8 @@ final class DoctrineOrganiserRepository implements OrganiserRepository
      */
     public function delete(OrganiserId $id): void
     {
-        /** @var OrmOrganiser|null $entity */
-        $entity = $this->em->find(OrmOrganiser::class, (string) $id);
+        /** @var DomainOrganiser|null $entity */
+        $entity = $this->em->find(DomainOrganiser::class, (string) $id);
         if (!$entity) {
             throw new NotFound('Organiser not found: ' . (string) $id);
         }
@@ -75,17 +56,14 @@ final class DoctrineOrganiserRepository implements OrganiserRepository
      */
     public function all(): array
     {
-        $repo = $this->em->getRepository(OrmOrganiser::class);
-        /** @var OrmOrganiser[] $entities */
-        $entities = $repo->findBy([], ['createdAt' => 'DESC']);
-        $out = [];
-        foreach ($entities as $entity) {
-            $out[] = new DomainOrganiser(
-                OrganiserId::fromString($entity->getId()),
-                $entity->getName(),
-                $entity->getCreatedAt(),
-            );
-        }
-        return $out;
+        $qb = $this->em->createQueryBuilder()
+            ->select('e')
+            ->from(DomainOrganiser::class, 'e')
+            ->orderBy('e.createdAt', 'ASC');
+
+        /** @var DomainOrganiser[] $rows */
+        $rows = $qb->getQuery()->getResult();
+
+        return $rows;
     }
 }

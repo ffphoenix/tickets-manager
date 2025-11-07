@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Organisers\Domain;
+namespace App\Organisers\Domain\ValueObject;
 
 use App\Shared\Domain\ValueObject\Uuid;
 

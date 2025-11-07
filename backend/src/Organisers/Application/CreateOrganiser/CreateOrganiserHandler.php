@@ -2,9 +2,9 @@
 
 namespace App\Organisers\Application\CreateOrganiser;
 
-use App\Organisers\Domain\Organiser;
-use App\Organisers\Domain\OrganiserId;
+use App\Organisers\Domain\Entity\Organiser;
 use App\Organisers\Domain\OrganiserRepository;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 
 final class CreateOrganiserHandler
 {

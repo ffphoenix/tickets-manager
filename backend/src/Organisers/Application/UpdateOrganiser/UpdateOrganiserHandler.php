@@ -2,8 +2,8 @@
 
 namespace App\Organisers\Application\UpdateOrganiser;
 
-use App\Organisers\Domain\OrganiserId;
 use App\Organisers\Domain\OrganiserRepository;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 
 final class UpdateOrganiserHandler
 {

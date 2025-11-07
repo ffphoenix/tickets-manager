@@ -2,6 +2,8 @@
 
 namespace App\Events\Domain;
 
+use App\Events\Domain\Entity\Event;
+use App\Events\Domain\ValueObject\EventId;
 use App\Shared\Domain\Exception\NotFound;
 
 interface EventRepository

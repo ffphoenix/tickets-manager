@@ -25,8 +25,14 @@ doctrine:
                 is_bundle: false
                 type: xml
                 dir: '%kernel.project_dir%/src/Events/Infrastructure/Persistence/Doctrine/Mapping'
-                prefix: 'App\Events\Domain'
-                alias: App\Events\Domain
+                prefix: 'App\Events\Domain\Entity'
+                alias: App\Events\Domain\Entity
+            App\Organisers\Domain\Entity:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Organisers/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Organisers\Domain\Entity'
+                alias: App\Organisers\Domain\Entity
             App:
                 type: attribute
                 is_bundle: false

@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Organisers\Domain;
+namespace App\Organisers\Domain\Entity;
+
+use App\Organisers\Domain\ValueObject\OrganiserId;
 
 final class Organiser
 {
     public function __construct(
-        private readonly OrganiserId $id,
+        private OrganiserId $id,
         private string $name,
-        private readonly \DateTimeImmutable $createdAt,
+        private \DateTimeImmutable $createdAt,
     ) {
         $this->rename($name);
     }

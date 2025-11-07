@@ -2,10 +2,10 @@
 
 namespace App\Events\Application\CreateEvent;
 
-use App\Events\Domain\Event;
-use App\Events\Domain\EventId;
+use App\Events\Domain\Entity\Event;
 use App\Events\Domain\EventRepository;
-use App\Organisers\Domain\OrganiserId;
+use App\Events\Domain\ValueObject\EventId;
+use App\Organisers\Domain\ValueObject\OrganiserId;
 
 final class CreateEventHandler
 {

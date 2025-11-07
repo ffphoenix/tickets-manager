@@ -4,19 +4,13 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Events\Domain\Entity\Event" table="events">
+    <entity name="App\Organisers\Domain\Entity\Organiser" table="organisers">
 
-        <id name="id" type="event_id" column="id">
+        <id name="id" type="organiser_id" column="id">
             <generator strategy="NONE"/>
         </id>
 
         <field name="name" type="string" length="255" column="name" />
-
-        <field name="organiserId" type="organiser_id" column="organiser_id" />
-
-        <field name="startAt" type="datetime_immutable" column="start_at" />
-
-        <field name="endAt" type="datetime_immutable" column="end_at" />
 
         <field name="createdAt" type="datetime_immutable" column="created_at" />
 
