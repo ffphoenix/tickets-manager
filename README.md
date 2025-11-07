@@ -8,6 +8,8 @@ A minimal tickets management backend built with Symfony 7 and Doctrine ORM. It e
   - Framework: Symfony 7.3 (skeleton)
   - ORM/DB: Doctrine ORM + Migrations + Fixtures
   - API Docs: NelmioApiDocBundle (Swagger UI at `/api/doc`)
+  - Security: Symfony Security (stateless) + JWT (HS256)
+  - Auth: Google Sign-In (frontend-driven ID token verification)
   - Runtime: Symfony Runtime; FrankenPHP scaffolding present (`backend/frankenphp/`)
   - Package manager: Composer
   - Database: PostgreSQL (connection via `DATABASE_URL`)
@@ -25,12 +27,12 @@ A minimal tickets management backend built with Symfony 7 and Doctrine ORM. It e
 │   ├── composer.json            # PHP dependencies & scripts
 │   ├── public/index.php         # HTTP entry point
 │   ├── src/
-│   │   ├── Controller/          # HTTP controllers (routes via attributes)
-│   │   ├── Entity/              # Doctrine entities
 │   │   ├── Events/              # Bounded context: Events (Domain, App, Infra)
 │   │   ├── Organisers/          # Bounded context: Organisers
 │   │   ├── Tickets/             # Bounded context: Tickets
-│   │   └── Shared/              # Shared kernel/utilities
+│   │   ├── Users/               # Bounded context: Users (System User)
+│   │   ├── Auth/                # Auth (Google Sign-In flow, controllers)
+│   │   └── Shared/              # Shared kernel/utilities (e.g., Security/JWT)
 │   ├── migrations/              # Doctrine migrations
 │   ├── src/DataFixtures/        # Development/test fixtures
 │   ├── config/routes.yaml       # Attribute routes loader for controllers
@@ -54,6 +56,9 @@ Backend variables are defined in `backend/.env` and overridable via real environ
 - `DATABASE_URL` — Doctrine DBAL connection string (PostgreSQL by default). Example:
   - `postgresql://appUser:test123qwerty@database:5432/app?serverVersion=16&charset=utf8`
 - `CORS_ALLOW_ORIGIN` — Regex for allowed origins (for NelmioCorsBundle), default allows localhost.
+- `JWT_SECRET` — Secret used to sign JWTs (required for auth; use a strong random string in non-dev).
+- `JWT_TTL` — Optional token TTL in seconds (default: 3600 if not set).
+- `GOOGLE_CLIENT_ID` — Google OAuth client ID used to verify frontend ID tokens.
 
 Frontend variables (used by Vite) are in `frontend/.env`:
 - `VITE_API_BASE_URL` — Base URL of the backend API that the frontend will call (e.g., `http://127.0.0.1:8000`).
